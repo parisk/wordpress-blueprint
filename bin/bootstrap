@@ -1,0 +1,29 @@
+#! /usr/bin/env sh
+
+if [ $SL_ENV -eq 1 ]
+then
+    echo "Creating MySQL database \"wordpress\"..."
+    mysql -h mysql -u root -pmysecretpassword -e "CREATE DATABASE wordpress"
+    if [ $? -eq 0 ]
+    then
+        echo "Ok."
+        echo "Creating settings..."
+        cp fixtures/dev/wp-config.php wordpress/wp-config.php
+        if [ $? -eq 0 ]
+        then
+            echo "Ok."
+            while true; do
+                read -p "Do you wish to install PHPMyAdmin for your project? " yn
+                case $yn in
+                    [Yy]* ) ./bin/phpmyadmin-install; break;;
+                    [Nn]* ) exit;;
+                    * ) echo "Please answer yes or no.";;
+                esac
+            done
+        else
+            echo "Error! Exiting."
+        fi
+    else
+        echo "Error! Exiting."
+    fi
+fi

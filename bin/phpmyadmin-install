@@ -1,0 +1,15 @@
+#! /usr/bin/env sh
+
+# Download PHPMyAdmin in temporary directory
+mkdir -p .tmp && \
+wget https://files.phpmyadmin.net/phpMyAdmin/4.5.4/phpMyAdmin-4.5.4-all-languages.zip -O .tmp/phpmyadmin.zip && \
+
+# Extract PHPMyAdmin into Wordpress' directory
+unzip .tmp/phpmyadmin.zip -d .tmp && \
+mv .tmp/phpMyAdmin-4.5.4-all-languages wordpress/phpmyadmin && \
+
+# Add proper server settings
+cp fixtures/dev/config.inc.php wordpress/phpmyadmin/ && \
+
+# Clean up temporary directory
+rm -r .tmp

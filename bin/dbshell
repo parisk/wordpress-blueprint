@@ -1,0 +1,6 @@
+#! /usr/bin/env sh
+
+if [ $SL_ENV -eq 1 ]
+then
+    mysql -h mysql -u root -pmysecretpassword
+fi
